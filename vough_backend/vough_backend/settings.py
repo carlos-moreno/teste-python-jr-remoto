@@ -128,3 +128,6 @@ STATIC_URL = "/static/"
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+GITHUB_TOKEN = config('GITHUB_TOKEN')
+GITHUB_API_URL = config('GITHUB_API_URL')

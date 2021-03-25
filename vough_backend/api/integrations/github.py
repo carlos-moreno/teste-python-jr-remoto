@@ -1,21 +1,24 @@
-import os
 import requests
+from django.conf import settings
 
 
 class GithubApi:
-    API_URL = os.environ.get("GITHUB_API_URL", "https://api.github.com")
-    GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+    API_URL = settings.GITHUB_API_URL
+    GITHUB_TOKEN = settings.GITHUB_TOKEN
+    headers = {'Authorization': f'token {GITHUB_TOKEN}'}
 
     def get_organization(self, login: str):
         """Busca uma organização no Github
 
         :login: login da organização no Github
         """
-        return {}
+        r = requests.get(f'{GithubApi.API_URL}/orgs/{login}', headers=GithubApi.headers)
+        return r.json()
 
-    def get_organization_public_members(self, login: str) -> int:
+    def get_organization_public_members(self, login: str):
         """Retorna todos os membros públicos de uma organização
 
         :login: login da organização no Github
         """
-        return 0
+        r = requests.get(f'{GithubApi.API_URL}/orgs/{login}/public_members', headers=GithubApi.headers)
+        return r.json()
